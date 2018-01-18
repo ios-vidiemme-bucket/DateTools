@@ -112,7 +112,7 @@ public extension Date {
         else if (components.day! >= 2) {
             return self.logicalLocalizedStringFromFormat(format: "%%d %@days ago", value: components.day!)
         }
-        else if (isYesterday) {
+        else if (isYesterday || components.day! == 1) {
             if (numericDates) {
                 return DateToolsLocalizedStrings("1 day ago");
             }
