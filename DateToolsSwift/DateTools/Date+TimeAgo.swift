@@ -68,8 +68,8 @@ public extension Date {
         
         
         let components = calendar.dateComponents(unitFlags, from: earliest, to: latest)
-        let yesterday = date.subtract(1.days)
-        let isYesterday = yesterday.day == self.day
+        let yesterday = latest.subtract(1.days)
+        let isYesterday = yesterday.day == earliest.day
         
         //Not Yet Implemented/Optional
         //The following strings are present in the translation files but lack logic as of 2014.04.05
@@ -109,8 +109,8 @@ public extension Date {
             
             return DateToolsLocalizedStrings("Last week");
         }
-        else if (components.day! >= 2) {
-            return self.logicalLocalizedStringFromFormat(format: "%%d %@days ago", value: components.day!)
+        else if (!isYesterday && components.day! >= 1 && (components.hour! > 0 || components.minute! > 0 || components.second! > 0)) {
+            return self.logicalLocalizedStringFromFormat(format: "%%d %@days ago", value: components.day! + 1)
         }
         else if (isYesterday || components.day! == 1) {
             if (numericDates) {
